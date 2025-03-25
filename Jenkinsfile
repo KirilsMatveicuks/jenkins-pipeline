@@ -1,14 +1,14 @@
 pipeline {
-    agent any  
+    agent any
 
     stages {
         stage('install-pip-deps') {
             steps {
                 script {
                     echo "Installing dependencies..."
-                    sh 'git clone https://github.com/mtararujs/python-greetings'
-                    sh 'ls python-greetings'
-                    sh 'pip3 install -r python-greetings/requirements.txt'
+                    bat 'git clone https://github.com/mtararujs/python-greetings'
+                    bat 'dir python-greetings'
+                    bat 'pip install -r python-greetings\\requirements.txt'
                 }
             }
         }
@@ -81,16 +81,16 @@ pipeline {
 
 def deploy(environment, port) {
     echo "Deploying to ${environment}..."
-    sh """
+    bat """
         git clone https://github.com/mtararujs/python-greetings
-        pm2 delete greetings-app-${environment} || true
-        pm2 start python-greetings/app.py --name greetings-app-${environment} -- --port ${port}
+        pm2 delete greetings-app-${environment} || exit /b 0
+        pm2 start python-greetings\\app.py --name greetings-app-${environment} -- --port ${port}
     """
 }
 
 def run_tests(environment) {
     echo "Running tests on ${environment}..."
-    sh """
+    bat """
         git clone https://github.com/mtararujs/course-js-api-framework
         cd course-js-api-framework && npm install
         cd course-js-api-framework && npm run greetings greetings_${environment}
