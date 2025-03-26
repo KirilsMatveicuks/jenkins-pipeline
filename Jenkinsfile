@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     echo "Installing dependencies..."
-                    bat 'git clone https://github.com/mtararujs/python-greetings'
+                    bat 'git clone https://github.com/mtararujs/python-greetings.git'
                     bat 'dir python-greetings'
                     bat 'pip install -r python-greetings\\requirements.txt'
                 }
